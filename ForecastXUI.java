@@ -9,15 +9,13 @@ public class ForecastXUI extends JFrame {
 
     public ForecastXUI() {
         setTitle("ForecastX");
-        setSize(1200, 800); // Increased size to accommodate travel plans
+        setSize(1200, 800);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         
-        // Use CardLayout for multiple pages
         cardLayout = new CardLayout();
         setLayout(cardLayout);
         
-        // Main panel (home page)
         mainPanel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
@@ -32,13 +30,11 @@ public class ForecastXUI extends JFrame {
         mainPanel.setLayout(new BorderLayout());
         add(mainPanel, "home");
         
-        // Create a centered content panel
         JPanel centerPanel = new JPanel();
         centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
         centerPanel.setOpaque(false);
         mainPanel.add(centerPanel, BorderLayout.CENTER);
         
-        // Taskbar panel at the top
         JPanel taskbarPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 10));
         taskbarPanel.setOpaque(false);
         taskbarPanel.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
@@ -58,7 +54,6 @@ public class ForecastXUI extends JFrame {
         centerPanel.add(taskbarPanel);
         centerPanel.add(Box.createRigidArea(new Dimension(0, 10)));
 
-        // Header with title - properly centered
         JPanel headerPanel = new JPanel(new BorderLayout());
         headerPanel.setOpaque(false);
         
@@ -67,7 +62,6 @@ public class ForecastXUI extends JFrame {
         title.setForeground(Color.WHITE);
         headerPanel.add(title, BorderLayout.CENTER);
         
-        // Auth buttons panel
         JPanel authPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 5));
         authPanel.setOpaque(false);
         
@@ -84,7 +78,6 @@ public class ForecastXUI extends JFrame {
         centerPanel.add(headerPanel);
         centerPanel.add(Box.createRigidArea(new Dimension(0, 10)));
 
-        // Subtitle (centered)
         JPanel subtitlePanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         subtitlePanel.setOpaque(false);
         
@@ -96,7 +89,6 @@ public class ForecastXUI extends JFrame {
         centerPanel.add(subtitlePanel);
         centerPanel.add(Box.createRigidArea(new Dimension(0, 30)));
 
-        // Search bar (above events)
         JPanel searchPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         searchPanel.setOpaque(false);
         searchField = new JTextField(30);
@@ -110,19 +102,16 @@ public class ForecastXUI extends JFrame {
         centerPanel.add(searchPanel);
         centerPanel.add(Box.createRigidArea(new Dimension(0, 30)));
 
-        // Weather Events Panel - properly centered with larger boxes
         JPanel eventsPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 0));
         eventsPanel.setOpaque(false);
         eventsPanel.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
 
-        // Create larger event cards
         eventsPanel.add(createEventCard("Heavy Rainfall in Mumbai", "Expect waterlogging in low-lying areas. Travel with caution."));
         eventsPanel.add(createEventCard("Heatwave Alert in Delhi", "Temperature expected to cross 42°C. Stay hydrated and avoid direct sun."));
         eventsPanel.add(createEventCard("Cyclone Warning in Chennai", "Strong winds and heavy rainfall predicted along coastal areas."));
 
         centerPanel.add(eventsPanel);
 
-        // Search action - show forecast page
         searchButton.addActionListener(e -> {
             String city = searchField.getText().trim();
             if (!city.isEmpty()) {
@@ -132,7 +121,6 @@ public class ForecastXUI extends JFrame {
             }
         });
         
-        // Create the forecast page (initially hidden)
         createForecastPage();
     }
 
@@ -149,25 +137,22 @@ public class ForecastXUI extends JFrame {
         JPanel card = new JPanel();
         card.setBackground(Color.WHITE);
         card.setLayout(new BoxLayout(card, BoxLayout.Y_AXIS));
-        card.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); // Increased padding
+        card.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         card.setOpaque(true);
-        
-        // Set larger preferred size to accommodate text
-        card.setPreferredSize(new Dimension(280, 180)); // Increased width and height
-        card.setMaximumSize(new Dimension(280, 180)); // Ensure consistent size
+        card.setPreferredSize(new Dimension(280, 180));
+        card.setMaximumSize(new Dimension(280, 180));
 
         JLabel titleLabel = new JLabel(title);
-        titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 18)); // Larger font
+        titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 18));
         titleLabel.setForeground(Color.RED);
         titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        // Use HTML with proper width and text alignment
         JLabel descLabel = new JLabel("<html><div style='text-align:center; width: 240px; padding: 5px;'>" + description + "</div></html>");
         descLabel.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         descLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         card.add(titleLabel);
-        card.add(Box.createRigidArea(new Dimension(0, 15))); // More space between title and description
+        card.add(Box.createRigidArea(new Dimension(0, 15)));
         card.add(descLabel);
 
         return card;
@@ -175,8 +160,6 @@ public class ForecastXUI extends JFrame {
     
     private void createForecastPage() {
         JPanel forecastPanel = new JPanel(new BorderLayout());
-        
-        // Forecast panel background
         forecastPanel = new JPanel(new BorderLayout()) {
             @Override
             protected void paintComponent(Graphics g) {
@@ -189,7 +172,6 @@ public class ForecastXUI extends JFrame {
             }
         };
         
-        // Back button
         JButton backButton = new JButton("Back to Home");
         backButton.setBackground(new Color(0, 123, 255));
         backButton.setForeground(Color.WHITE);
@@ -200,16 +182,13 @@ public class ForecastXUI extends JFrame {
         topPanel.add(backButton);
         forecastPanel.add(topPanel, BorderLayout.NORTH);
         
-        // Forecast content will be added dynamically in showForecastPage()
         add(forecastPanel, "forecast");
     }
     
     private void showForecastPage(String city) {
-        // Get the forecast panel
         JPanel forecastPanel = (JPanel) getContentPane().getComponent(1);
-        forecastPanel.removeAll(); // Clear previous content
+        forecastPanel.removeAll();
         
-        // Use a scroll pane for the forecast page
         JScrollPane scrollPane = new JScrollPane();
         scrollPane.setBorder(BorderFactory.createEmptyBorder());
         scrollPane.getViewport().setOpaque(false);
@@ -222,7 +201,6 @@ public class ForecastXUI extends JFrame {
         scrollPane.setViewportView(contentPanel);
         forecastPanel.add(scrollPane, BorderLayout.CENTER);
         
-        // Add back button
         JButton backButton = new JButton("Back to Home");
         backButton.setBackground(new Color(0, 123, 255));
         backButton.setForeground(Color.WHITE);
@@ -233,9 +211,6 @@ public class ForecastXUI extends JFrame {
         topPanel.add(backButton);
         forecastPanel.add(topPanel, BorderLayout.NORTH);
         
-        // Create forecast content
-        
-        // City name
         JLabel cityLabel = new JLabel("Weather Forecast for " + city);
         cityLabel.setFont(new Font("Segoe UI", Font.BOLD, 28));
         cityLabel.setForeground(Color.WHITE);
@@ -243,14 +218,12 @@ public class ForecastXUI extends JFrame {
         contentPanel.add(Box.createRigidArea(new Dimension(0, 30)));
         contentPanel.add(cityLabel);
         
-        // Weather icon (placeholder)
         JLabel weatherIcon = new JLabel("☀️");
         weatherIcon.setFont(new Font("Segoe UI", Font.PLAIN, 64));
         weatherIcon.setAlignmentX(Component.CENTER_ALIGNMENT);
         contentPanel.add(Box.createRigidArea(new Dimension(0, 20)));
         contentPanel.add(weatherIcon);
         
-        // Temperature
         JLabel tempLabel = new JLabel("28°C");
         tempLabel.setFont(new Font("Segoe UI", Font.BOLD, 36));
         tempLabel.setForeground(Color.WHITE);
@@ -258,7 +231,6 @@ public class ForecastXUI extends JFrame {
         contentPanel.add(Box.createRigidArea(new Dimension(0, 10)));
         contentPanel.add(tempLabel);
         
-        // Weather description
         JLabel descLabel = new JLabel("Sunny");
         descLabel.setFont(new Font("Segoe UI", Font.PLAIN, 20));
         descLabel.setForeground(Color.WHITE);
@@ -266,7 +238,6 @@ public class ForecastXUI extends JFrame {
         contentPanel.add(Box.createRigidArea(new Dimension(0, 10)));
         contentPanel.add(descLabel);
         
-        // Details panel
         JPanel detailsPanel = new JPanel(new GridLayout(2, 2, 20, 20));
         detailsPanel.setOpaque(false);
         detailsPanel.setBorder(BorderFactory.createEmptyBorder(30, 100, 30, 100));
@@ -279,7 +250,6 @@ public class ForecastXUI extends JFrame {
         
         contentPanel.add(detailsPanel);
         
-        // 3-day forecast
         JLabel forecastTitle = new JLabel("3-Day Forecast");
         forecastTitle.setFont(new Font("Segoe UI", Font.BOLD, 20));
         forecastTitle.setForeground(Color.WHITE);
@@ -298,7 +268,6 @@ public class ForecastXUI extends JFrame {
         
         contentPanel.add(forecastDays);
         
-        // Travel Plans Section - NEW
         JLabel travelTitle = new JLabel("Travel Recommendations");
         travelTitle.setFont(new Font("Segoe UI", Font.BOLD, 20));
         travelTitle.setForeground(Color.WHITE);
@@ -321,7 +290,6 @@ public class ForecastXUI extends JFrame {
         forecastPanel.revalidate();
         forecastPanel.repaint();
         
-        // Show the forecast panel
         cardLayout.show(getContentPane(), "forecast");
     }
     
@@ -373,7 +341,6 @@ public class ForecastXUI extends JFrame {
         return card;
     }
     
-    // NEW: Method to create travel recommendation cards
     private JPanel createTravelCard(String title, String description) {
         JPanel card = new JPanel();
         card.setLayout(new BoxLayout(card, BoxLayout.Y_AXIS));
@@ -403,4 +370,3 @@ public class ForecastXUI extends JFrame {
         SwingUtilities.invokeLater(() -> new ForecastXUI().setVisible(true));
     }
 }
-
